@@ -44,11 +44,20 @@ const newObj = cloneObject(obj);
 // task3
 
 const add = (a, b) => a + b;
-const wrapper = (args) => {
-  let cache = [];
 
-  console.log(cache);
-};
+function wrapper(func) {
+  let memo = {};
+  let slice = Array.prototype.slice;
+
+  return function () {
+    var args = slice.call(arguments);
+
+    if (args in memo) {
+      console.log("cached");
+      return memo[args];
+    } else return (memo[args] = func.apply(this, args));
+  };
+}
 
 const cachedAdd = wrapper(add);
 console.log(cachedAdd(2, 2));
