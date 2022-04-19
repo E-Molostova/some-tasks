@@ -18,27 +18,30 @@ function isAnagram(str1, str2) {
 /////////////////////////////////////////////////////////////////////////////
 // task2
 function cloneObject(obj) {
-  let clone = {};
-  for (let i in obj) {
-    if (Array.isArray(obj[i])) {
-      clone[i] = obj[i].slice(0);
-    } else if (obj[i] !== null && typeof obj[i] == "object") {
-      clone[i] = cloneObject(obj[i]);
-    } else {
-      clone[i] = obj[i];
-    }
-  }
-  return clone;
+  let clone = Object.assign({}, obj);
+
+  Object.keys(clone).forEach(
+    (key) =>
+      (clone[key] =
+        typeof obj[key] === "object" ? cloneObject(obj[key]) : obj[key])
+  );
+
+  return Array.isArray(obj) && obj.length
+    ? (clone.length = obj.length) && Array.from(clone)
+    : Array.isArray(obj)
+    ? Array.from(obj)
+    : clone;
 }
 
 const obj = {
   a: 1,
   b: [1, 2],
+  c: [{ a: 2 }, { b: [1, 5] }, [{ c: [1] }]],
 };
 const newObj = cloneObject(obj);
-
-// console.log(obj);
-// console.log(newObj);
+obj.c[1].b = 2;
+console.log(obj);
+console.log(newObj);
 
 /////////////////////////////////////////////////////////////////////////////
 // task3
@@ -61,8 +64,8 @@ function wrapper(func) {
 }
 
 const cachedAdd = wrapper(add);
-console.log(cachedAdd(2, [2], { a: 5 }));
-console.log(cachedAdd(3, 3));
-console.log(cachedAdd(2, 2));
-console.log(cachedAdd(2, [2], { a: 5 }));
-console.log(cachedAdd(3, 4));
+// console.log(cachedAdd(2, [2], { a: 5 }));
+// console.log(cachedAdd(3, 3));
+// console.log(cachedAdd(2, 2));
+// console.log(cachedAdd(2, [2], { a: 5 }));
+// console.log(cachedAdd(3, 4));
