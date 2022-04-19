@@ -20,9 +20,12 @@ function isAnagram(str1, str2) {
 function cloneObject(obj) {
   let clone = {};
   for (let i in obj) {
-    if (obj[i] !== null && typeof obj[i] == "object") {
+    if (Array.isArray(obj[i])) {
+      clone[i] = obj[i].slice(0);
+    } else if (obj[i] !== null && typeof obj[i] == "object") {
       clone[i] = cloneObject(obj[i]);
     } else {
+      console.log(i);
       clone[i] = obj[i];
     }
   }
@@ -31,14 +34,12 @@ function cloneObject(obj) {
 
 const obj = {
   a: 1,
-  b: {
-    c: 2,
-  },
+  b: [1, 2],
 };
 const newObj = cloneObject(obj);
 
-// console.log(obj);
-// console.log(newObj);
+console.log(obj);
+console.log(newObj);
 
 /////////////////////////////////////////////////////////////////////////////
 // task3
@@ -60,6 +61,6 @@ function wrapper(func) {
 }
 
 const cachedAdd = wrapper(add);
-console.log(cachedAdd(2, 2));
-console.log(cachedAdd(3, 3));
-console.log(cachedAdd(2, 2));
+// console.log(cachedAdd(2, 2));
+// console.log(cachedAdd(3, 3));
+// console.log(cachedAdd(2, 2));
