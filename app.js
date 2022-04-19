@@ -25,7 +25,6 @@ function cloneObject(obj) {
     } else if (obj[i] !== null && typeof obj[i] == "object") {
       clone[i] = cloneObject(obj[i]);
     } else {
-      console.log(i);
       clone[i] = obj[i];
     }
   }
@@ -38,8 +37,8 @@ const obj = {
 };
 const newObj = cloneObject(obj);
 
-console.log(obj);
-console.log(newObj);
+// console.log(obj);
+// console.log(newObj);
 
 /////////////////////////////////////////////////////////////////////////////
 // task3
@@ -51,7 +50,8 @@ function wrapper(func) {
   let slice = Array.prototype.slice;
 
   return function () {
-    var args = slice.call(arguments);
+    let args = slice.call(arguments);
+    console.log(args);
 
     if (args in memo) {
       console.log("cached");
@@ -61,6 +61,8 @@ function wrapper(func) {
 }
 
 const cachedAdd = wrapper(add);
-// console.log(cachedAdd(2, 2));
-// console.log(cachedAdd(3, 3));
-// console.log(cachedAdd(2, 2));
+console.log(cachedAdd(2, [2], { a: 5 }));
+console.log(cachedAdd(3, 3));
+console.log(cachedAdd(2, 2));
+console.log(cachedAdd(2, [2], { a: 5 }));
+console.log(cachedAdd(3, 4));
